@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Proyecto_ABM.WebSite.Models.Empleado>
+
+<div style="padding-left: 10px; padding-right: 10px;">
+    <table id="table" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Observaciones)
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usuario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Edad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Observaciones)
+                    </td>
+                    <td>
+                        <div align="center">
+                            <button class="btn btn-primary">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                <a onclick="getEdit(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Editar</a>
+                            </button>
+                            |
+                            <button class="btn btn-warning">
+                                <i class="glyphicon glyphicon-eye-open"></i>
+                                <a onclick="getDetails(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Detalles</a>
+                            </button>
+                            |
+                            <button class="btn btn-danger">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                <a onclick="getDelete(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Eliminar</a>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function getDelete(id) {
+        $.ajax({
+            type: "GET",
+            url: "Empleadoes/Delete",
+            data: { id },
+            async: false,
+            dataType: "html",
+            success: function (data) {
+                $("#idDiv").html(data);
+            }
+        });
+    }
+
+    function getEdit (id){
+        $.ajax({
+            type: "GET",
+            url: "Empleadoes/Edit",
+            data: {id},
+            async: false,
+            dataType: "html",
+            success: function (data) {
+                $("#idDiv").html(data);
+            }
+        });
+    }
+
+    function getDetails(id) {
+        $.ajax({
+            type: "POST",
+            url: "Empleadoes/Details",
+            data: {id},
+            async: false,
+            dataType: "html",
+            success: function (data) {
+                $("#idDiv").html(data);
+            }
+        });
+    }
+</script>
