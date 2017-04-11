@@ -1,23 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Roles>
-  <RolItem name="Admin">
-    <SubRol name="Admin_Alta">
-      <Rol name="DEV"/>
-      <Rol name="Public"/>
-    </SubRol>
-    <SubRol name="Admin_Baja">
-      <Rol name="xxx"/>
-    </SubRol>
-    <SubRol name="Admin_Edit">
-      <Rol name="Public"/>
-    </SubRol>
-  </RolItem>
-  <RolItem name="Revision">
-    <SubRol name="Admin_Alta">
-      <Rol name="Public"/>
-    </SubRol>
-    <SubRol name="Admin_Baja">
-      <Rol name="Public"/>
-    </SubRol>
-  </RolItem>
+  <RolAD name="Admin">
+    <RolApp name="Admin_Alta"/>
+    <RolApp name="Admin_Baja"/>
+    <RolApp name="Admin_Edit"/>
+    <RolApp name="Admin_Detalle"/>
+  </RolAD>
+  <RolAD name="Public">
+    <RolApp name="Admin_Edit"/>
+    <RolApp name="Admin_Detalle"/>
+  </RolAD>
 </Roles>

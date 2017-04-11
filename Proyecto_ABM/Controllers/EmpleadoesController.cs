@@ -24,6 +24,7 @@ namespace Proyecto_ABM.WebSite.Controllers
         }
 
         // GET: Empleadoes/Details/5
+        [Authorize(Roles = "Admin_Detalle")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,6 +42,7 @@ namespace Proyecto_ABM.WebSite.Controllers
         // POST: Empleadoes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin_Alta")]
         public ActionResult Create([Bind(Include = "Usuario,Nombre,Edad,Telefono,Observaciones")] Empleado empleado)
         {
             if (ModelState.IsValid)
@@ -65,7 +67,7 @@ namespace Proyecto_ABM.WebSite.Controllers
         }
 
         // GET: Empleadoes/Edit/5
-        [Authorize(Roles = "Admin, Admin_Edit")]
+        [Authorize(Roles = "Admin_Edit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,6 +87,7 @@ namespace Proyecto_ABM.WebSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin_Edit")]
         public ActionResult Edit([Bind(Include = "Id,Usuario,Nombre,Edad,Telefono,Observaciones")] Empleado empleado)
         {
             if (ModelState.IsValid)
@@ -109,6 +112,7 @@ namespace Proyecto_ABM.WebSite.Controllers
         }
 
         // GET: Empleadoes/Delete/5
+        [Authorize(Roles = "Admin_Baja")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -124,6 +128,7 @@ namespace Proyecto_ABM.WebSite.Controllers
         }
 
         // POST: Empleadoes/Delete/5
+        [Authorize(Roles = "Admin_Baja")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

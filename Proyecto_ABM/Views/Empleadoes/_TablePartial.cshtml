@@ -50,20 +50,27 @@
                     </td>
                     <td>
                         <div align="center">
-                            <button class="btn btn-primary">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                                <a onclick="getEdit(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Editar</a>
-                            </button>
-                            |
+
+                            @if (User.IsInRole("Admin_Edit"))
+                            {<span>|</span>
+                                <button class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                    <a onclick="getEdit(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Editar</a>
+                                </button>
+                                <span>|</span>
+                            }
                             <button class="btn btn-warning">
                                 <i class="glyphicon glyphicon-eye-open"></i>
                                 <a onclick="getDetails(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Detalles</a>
                             </button>
                             |
-                            <button class="btn btn-danger">
-                                <i class="glyphicon glyphicon-trash"></i>
-                                <a onclick="getDelete(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Eliminar</a>
-                            </button>
+                            @if (User.IsInRole("Admin_Baja"))
+                            {
+                                <button class="btn btn-danger">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <a onclick="getDelete(@item.Id)" href="#idModal" data-backdrop="false" data-toggle="modal" style="color: white">Eliminar</a>
+                                </button>
+                            }
                         </div>
                     </td>
                 </tr>
@@ -87,11 +94,11 @@
         });
     }
 
-    function getEdit (id){
+    function getEdit(id) {
         $.ajax({
             type: "GET",
             url: "Empleadoes/Edit",
-            data: {id},
+            data: { id },
             async: false,
             dataType: "html",
             success: function (data) {
@@ -104,7 +111,7 @@
         $.ajax({
             type: "POST",
             url: "Empleadoes/Details",
-            data: {id},
+            data: { id },
             async: false,
             dataType: "html",
             success: function (data) {

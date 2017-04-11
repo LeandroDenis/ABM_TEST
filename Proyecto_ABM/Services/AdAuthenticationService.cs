@@ -2,7 +2,6 @@
 using Proyecto_ABM.Services;
 using Proyecto_ABM.WebSite.App_Start;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Authentication;
@@ -83,6 +82,7 @@ namespace Proyecto_ABM.WebSite.Services
             CustomRolManager roleManager = new CustomRolManager();
             foreach (var @role in groups)
             {
+                var a = roleManager.getRoles(@role.Name);
                 foreach (var rol in roleManager.getRoles(@role.Name))
                 {
                     identity.AddClaim(new Claim(ClaimTypes.Role, rol));

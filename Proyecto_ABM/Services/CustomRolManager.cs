@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Web;
 using System.Xml;
 
 namespace Proyecto_ABM.Services
 {
     public class CustomRolManager
     {
-        List<string> ListaRolApp = new List<string>();
         XmlDocument xmldoc = new XmlDocument();
 
         public CustomRolManager()
         {
-            string path = @"C:\Users\ldenis\Desktop\Proyecto_ABM\Proyecto_ABM\Resources\Roles.xml";
+            string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["Roles"]);
             xmldoc.Load(path);
         }
 
@@ -21,36 +22,18 @@ namespace Proyecto_ABM.Services
 
         private List<string> getRolesFromXML(XmlDocument xml, string rolDeUsuario)
         {
-            XmlNodeList nodos = xml.GetElementsByTagName("RolItem");
-            foreach (XmlElement nodo in nodos)
+            List<string> listaRoles = new List<string>();
+            foreach (XmlElement rol in xml.GetElementsByTagName("RolAD"))
             {
-                List<string> ListaRol = new List<string>();
-                XmlNodeList subRolesPorNodo = nodo.GetElementsByTagName("SubRol");
-                foreach (XmlElement item in subRolesPorNodo)
+                if (rol.GetAttribute("name") == rolDeUsuario)
                 {
-                    XmlNodeList roles = item.GetElementsByTagName("Rol");
-                    foreach (XmlElement rol in roles)
+                    foreach (XmlElement appRol in rol.GetElementsByTagName("RolApp"))
                     {
-                        if (rolDeUsuario == rol.GetAttribute("name"))
-                        {
-                            ListaRol.Add(item.GetAttribute("name"));
-                        }
-                    }
-                }
-                if (ListaRol.Count == subRolesPorNodo.Count)
-                {
-                    ListaRolApp.Add(nodo.GetAttribute("name"));
-                }
-                else
-                {
-                    foreach (var i in ListaRol)
-                    {
-                        if (!ListaRolApp.Contains(i))
-                            ListaRolApp.Add(i);
+                        listaRoles.Add(appRol.GetAttribute("name"));
                     }
                 }
             }
-            return ListaRolApp;
+            return listaRoles;
         }
     }
 }
